@@ -10,14 +10,20 @@
     "Other"
   ],
   "activationEvents": [
+    "*",
     "*"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "ilikenest.helloWorld",
-        "title": "setlimit"
+        "command": "setNest",
+        "title": "setNest"
+      }
+      ,
+      {
+        "command": "displayNest",
+        "title": "displayNest"
       }
     ]
   },
