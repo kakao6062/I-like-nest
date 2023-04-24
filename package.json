@@ -10,8 +10,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:setNest",
-    "onCommand:displayNest"
+    "onCommand:setNest"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -24,7 +23,15 @@
         "command": "extention.displayNest",
         "title": "displayNest"
       }
-    ]
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "extention.displayNest",
+          "when": "editorTextFocus"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",

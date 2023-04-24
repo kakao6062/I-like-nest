@@ -8,7 +8,7 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	
 	let displayNest = vscode.commands.registerCommand('extention.displayNest', () =>{
-		ins.displayNest();
+		ins.displayNest(context);
 	});
 
 	context.subscriptions.push(ins);
@@ -34,27 +34,42 @@ class ILikeNest {
 		}
 	}
 
-	public displayNest() {
-		const codeTexts = vscode.window.activeTextEditor?.document.getText();
+	public displayNest(context: vscode.ExtensionContext) {
+		const activeEditor = vscode.window.activeTextEditor;
+		const codeTexts = activeEditor?.document.getText();
+		const tabLength = activeEditor?.options.tabSize as number;
+		const display:vscode.StatusBarItem | undefined = vscode.window.createStatusBarItem(
+			vscode.StatusBarAlignment.Right,
+			0
+		);
+
 		let countNest = 0;
-		let output = 0;
 		let flag = true;
+		let maxNestSize = 0;
 		if (codeTexts !== undefined){
 			for (let i = 0; i < codeTexts?.length; i++) {
-				if (codeTexts.charAt(i) === " " && flag) {
-					countNest += 1;
+				if ((codeTexts.charAt(i) === " " || codeTexts.charAt(i) === "\t") && flag) {
+					if (codeTexts.charAt(i) === " ") {
+						countNest += 1;
+					}
+					else {
+						countNest += tabLength
+					}
 				}else if (codeTexts.charAt(i) === "\n") {
 					flag = true;
-					output = Math.max(output, countNest);
+					maxNestSize = Math.max(maxNestSize, countNest);
 					countNest = 0;
 				}else{
 					flag = false;
 				}
 			}
+			display.text = `Nest Size: ${maxNestSize}`;
+			display.show();
+		}else {
+			display.hide();
 		}
-
-		vscode.window.showInformationMessage(`Now max nest size : ${output}`);
 	}
+
 	dispose() {
 		this._disposable.dispose();
 	}
