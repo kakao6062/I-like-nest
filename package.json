@@ -10,19 +10,18 @@
     "Other"
   ],
   "activationEvents": [
-    "*",
-    "*"
+    "onCommand:setNest",
+    "onCommand:displayNest"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "setNest",
+        "command": "extention.setNest",
         "title": "setNest"
-      }
-      ,
+      },
       {
-        "command": "displayNest",
+        "command": "extention.displayNest",
         "title": "displayNest"
       }
     ]
