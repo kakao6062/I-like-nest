@@ -41,6 +41,11 @@ class ILikeNest {
 		const activeEditor = vscode.window.activeTextEditor;
 		const codeTexts = activeEditor?.document.getText();
 		const tabLength = activeEditor?.options.tabSize as number;
+		const cats = [
+			'https://media.tenor.com/vR2nHwWXla0AAAAC/oh-no-cat-falling.gif',
+			'https://media.tenor.com/Jat_4J29fygAAAAC/cat-stairs.gif',
+			'https://media.tenor.com/r293RsMY9-AAAAAd/cat.gif'
+		]
 
 		let countNest = 0;
 		let flag = true;
@@ -66,6 +71,32 @@ class ILikeNest {
 			display.show();
 		}else {
 			display.hide();
+		}
+
+		function getWebviewContent(){
+			return `<!DOCTYPE html>
+			<html lang="ja">
+			<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			</head>
+			<body>
+			<img src='${cats[Math.floor(Math.random() * cats.length)]}' />
+			</body>
+			</html>`;
+		}
+
+		if(this.limit !== undefined){
+			if(maxNestSize > parseInt(this.limit)) {
+
+				const panel = vscode.window.createWebviewPanel(
+					'Your Nest as Cat',
+					'Cat is falling as your nest',
+					vscode.ViewColumn.Two,
+					{}
+				);
+				panel.webview.html = getWebviewContent();
+			} 
 		}
 	}
 
