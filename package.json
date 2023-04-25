@@ -4,7 +4,7 @@
   "description": "beautiful code manager",
   "version": "0.0.1",
   "publisher": "kakatoshi",
-  "icon": "./src/icon.png",
+  "icon": "src/icon.png",
   "engines": {
     "vscode": "^1.77.0"
   },
