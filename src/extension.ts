@@ -2,18 +2,21 @@ import * as vscode from 'vscode';
 
 export function activate(context: vscode.ExtensionContext) {
 	const ins = new ILikeNest();
+	const display: vscode.StatusBarItem | undefined = vscode.window.createStatusBarItem(
+		vscode.StatusBarAlignment.Right,
+		0
+	);
+
+	vscode.workspace.onDidChangeTextDocument(() => {
+		ins.displayNest(display);
+	});
 
 	let setNest = vscode.commands.registerCommand('extention.setNest', () =>{
 		ins.setNest();
 	});
-	
-	let displayNest = vscode.commands.registerCommand('extention.displayNest', () =>{
-		ins.displayNest(context);
-	});
 
 	context.subscriptions.push(ins);
 	context.subscriptions.push(setNest);
-	context.subscriptions.push(displayNest);
 }
 
 class ILikeNest {
@@ -34,14 +37,10 @@ class ILikeNest {
 		}
 	}
 
-	public displayNest(context: vscode.ExtensionContext) {
+	public displayNest(display: vscode.StatusBarItem) {
 		const activeEditor = vscode.window.activeTextEditor;
 		const codeTexts = activeEditor?.document.getText();
 		const tabLength = activeEditor?.options.tabSize as number;
-		const display:vscode.StatusBarItem | undefined = vscode.window.createStatusBarItem(
-			vscode.StatusBarAlignment.Right,
-			0
-		);
 
 		let countNest = 0;
 		let flag = true;
