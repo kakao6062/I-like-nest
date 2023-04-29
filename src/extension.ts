@@ -11,7 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
 		ins.displayNest(display);
 	});
 
-	let setNest = vscode.commands.registerCommand("extention.setNest", () =>{
+	let setNest = vscode.commands.registerCommand("extention.setNest", () => {
 		ins.setNest();
 	});
 
@@ -36,7 +36,7 @@ class ILikeNest {
 		if (!lim_str) return;
 
 		this.limit = parseInt(lim_str);
-		vscode.window.showInformationMessage(`Max nest size : ${this.limit}`);	
+		vscode.window.showInformationMessage(`Max nest size : ${this.limit}`);
 	}
 
 	public displayNest(display: vscode.StatusBarItem) {
@@ -53,24 +53,24 @@ class ILikeNest {
 		]
 
 		let maxNestSize = 0;
-		if (!codeTexts){
+		if (!codeTexts) {
 			display.hide();
 			return;
 		}
 
 		for (const row of codeTexts.split("\n")) {
 			let countNest = 0;
+
 			for (const c of row) {
 				if (!([" ", "\t"].includes(c))) break;
-					countNest += (c === " ") ? 1: tabLength;
+				countNest += (c === " ") ? 1 : tabLength;
 			}
-					maxNestSize = Math.max(maxNestSize, countNest);
+
+			maxNestSize = Math.max(maxNestSize, countNest);
 		}
 
 		display.text = `Nest Size: ${maxNestSize}`;
 		display.show();
-
-
 
 		const getWebviewContent = (() =>
 			`<!DOCTYPE html>
@@ -85,9 +85,9 @@ class ILikeNest {
 			</html>`
 		);
 
-		if(!this.limit) return;
+		if (!this.limit) return;
 
-		if(maxNestSize > this.limit) {
+		if (maxNestSize > this.limit) {
 			const panel = vscode.window.createWebviewPanel(
 				'Your Nest as Cat',
 				'Cat is falling as your nest',
@@ -103,4 +103,4 @@ class ILikeNest {
 	}
 }
 
-export function deactivate() {}
+export function deactivate() { }
