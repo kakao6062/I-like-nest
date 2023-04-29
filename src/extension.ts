@@ -58,11 +58,10 @@ class ILikeNest {
 			return;
 		}
 
-
 		for (const row of codeTexts.split("\n")) {
 			let countNest = 0;
 			for (const c of row) {
-				if (!( c in [" ", "\t"])) break;
+				if (!([" ", "\t"].includes(c))) break;
 					countNest += (c === " ") ? 1: tabLength;
 			}
 					maxNestSize = Math.max(maxNestSize, countNest);
