@@ -8,7 +8,7 @@ I like nestはVScodeの拡張機能です．
 
 I like nestには1種類のコマンドが存在します．
 
-### setNest
+`setNest`
 
 ユーザー指定で最大深度を定義できます．設定は任意です．
 
